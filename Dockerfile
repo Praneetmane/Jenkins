@@ -1,17 +1,31 @@
-FROM node
+#
+# Each instruction in this file generates a new layer that gets pushed to your local image cache
+#
 
-RUN apt-get update && apt-get upgrade -y \
-    && apt-get clean
+#
+# Lines preceeded by # are regarded as comments and ignored
+#
 
-RUN mkdir /app
-WORKDIR /app
+#
+# The line below states we will base our new image on the Latest Official Ubuntu 
+FROM ubuntu:latest
 
-COPY package.json /app/
-RUN npm install --only=production
+#
+# Identify the maintainer of an image
+LABEL maintainer="myname@somecompany.com"
 
-COPY src /app/src
+#
+# Update the image to the latest packages
+RUN apt-get update && apt-get upgrade -y
 
-EXPOSE 3000
+#
+# Install NGINX to test.
+RUN apt-get install nginx -y
 
-CMD [ "npm", "start" ]
+#
+# Expose port 80
+EXPOSE 80
 
+#
+# Last is the actual command to start up NGINX within our Container
+CMD ["nginx", "-g", "daemon off;"]
