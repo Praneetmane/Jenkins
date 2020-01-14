@@ -1,6 +1,16 @@
-FROM ubuntu 
-MAINTAINER demousr@gmail.com 
+FROM node
 
-RUN apt-get update 
-RUN apt-get install –y nginx 
-CMD [“echo”,”Image created”] 
+RUN apt-get update && apt-get upgrade -y \
+    && apt-get clean
+
+RUN mkdir /app
+WORKDIR /app
+
+COPY package.json /app/
+RUN npm install --only=production
+
+COPY src /app/src
+
+EXPOSE 3000
+
+CMD [ "npm", "start" ]
