@@ -1,11 +1,11 @@
 pipeline {
     agent {
-        docker { image 'praneetmane/git:latest' }
+        docker { dockerfile true }
     }
     stages {
         stage('Test') {
             steps {
-                sh 'node --version'
+                sh 'nginx --version'
             }
         }
     }
