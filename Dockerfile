@@ -9,7 +9,6 @@ WORKDIR /app
 
 RUN npm install --only=production
 
-COPY src /app/src
 
 EXPOSE 3000
 
